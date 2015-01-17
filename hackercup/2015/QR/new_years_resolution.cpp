@@ -38,7 +38,7 @@ Node sub(Node n1, Node n2)
 	return diff;
 }
 
-bool solve(Node *nodes, Node limit, Node sum)
+bool solve(int from, Node *nodes, Node limit, Node sum)
 {
 	int val = compare(limit, sum);
 
@@ -48,12 +48,12 @@ bool solve(Node *nodes, Node limit, Node sum)
 		return false;
 	}
 
-	for(int i=0; i<N; i++) {
+	for(int i=from; i<N; i++) {
 		if (!nodes[i].visited) {
 			nodes[i].visited = true;
 			
 			sum = add(sum, nodes[i]);
-			if (solve(nodes, limit, sum) == true) return true;
+			if (solve(i, nodes, limit, sum) == true) return true;
 			sum = sub(sum, nodes[i]);
 
 			nodes[i].visited = false;
@@ -82,7 +82,7 @@ int main()
 		}
 
 		Node sum = {0,0,0};
-		if (solve(nodes, limit, sum) == true) 
+		if (solve(0, nodes, limit, sum) == true) 
 			cout << "Case #" << t+1 << ": yes" << endl;
 		else 
 			cout << "Case #" << t+1 << ": no" << endl;
